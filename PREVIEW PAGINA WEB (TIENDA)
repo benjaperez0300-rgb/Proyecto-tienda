@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mi Página</title>
+
+    <style>
+
+        /* =========================
+           CONFIGURACIÓN GENERAL
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111111;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           BARRA SUPERIOR
+        ========================= */
+
+        header {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 80px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 32px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            z-index: 1000;
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 42px;
+
+            font-weight: bold;
+
+            letter-spacing: -5px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           BUSCADOR
+        ========================= */
+
+        .search {
+            position: absolute;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 135px;
+
+            border-bottom: 1px solid #111;
+
+            padding-bottom: 8px;
+
+            font-size: 12px;
+
+            text-align: left;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           MENU
+        ========================= */
+
+        .menu {
+            display: flex;
+
+            gap: 25px;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+        }
+
+        .menu a {
+            transition: opacity 0.2s;
+        }
+
+        .menu a:hover {
+            opacity: 0.5;
+        }
+
+
+        /* =========================
+           PÁGINA PRINCIPAL
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding-top: 80px;
+        }
+
+
+        /* =========================
+           LOGO GRANDE
+        ========================= */
+
+        .hero-logo {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: clamp(100px, 20vw, 300px);
+
+            font-weight: bold;
+
+            letter-spacing: -25px;
+
+            line-height: 1;
+
+            transform: scaleX(1.05);
+        }
+
+
+        /* =========================
+           FLECHA
+        ========================= */
+
+        .arrow {
+            position: absolute;
+
+            right: 40px;
+
+            bottom: 40px;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            cursor: pointer;
+
+            transition: transform 0.3s;
+        }
+
+        .arrow:hover {
+            transform: translateX(8px);
+        }
+
+
+        /* =========================
+           COOKIE
+        ========================= */
+
+        .cookies {
+            position: fixed;
+
+            left: 32px;
+
+            bottom: 32px;
+
+            width: 375px;
+
+            background: white;
+
+            border: 1px solid #ccc;
+
+            padding: 28px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            z-index: 2000;
+        }
+
+        .cookies button {
+            position: absolute;
+
+            top: 10px;
+
+            right: 10px;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 24px;
+
+            cursor: pointer;
+        }
+
+        .cookies p {
+            margin-top: 15px;
+        }
+
+
+        /* =========================
+           SECCIÓN PRODUCTOS
+        ========================= */
+
+        .productos {
+            min-height: 100vh;
+
+            padding: 120px 32px 60px;
+
+            background: #f7f7f7;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 40px;
+
+            font-weight: normal;
+
+            margin-bottom: 60px;
+        }
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .producto {
+            background: white;
+
+            height: 500px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+            cursor: pointer;
+        }
+
+        .producto::before {
+            content: "";
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eeeeee,
+                    #d5d5d5
+                );
+
+            transition: transform 0.5s;
+        }
+
+        .producto:hover::before {
+            transform: scale(1.05);
+        }
+
+        .producto span {
+            position: relative;
+
+            z-index: 2;
+
+            background: white;
+
+            padding: 12px 20px;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =========================
+           SOBRE NOSOTROS
+        ========================= */
+
+        .nosotros {
+            min-height: 70vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 80px 30px;
+        }
+
+        .nosotros-contenido {
+            max-width: 700px;
+        }
+
+        .nosotros h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 50px;
+
+            font-weight: normal;
+
+            margin-bottom: 30px;
+        }
+
+        .nosotros p {
+            color: #555;
+
+            line-height: 1.8;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 40px 32px;
+
+            border-top: 1px solid #ddd;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .search {
+                display: none;
+            }
+
+            .menu {
+                gap: 12px;
+
+                font-size: 10px;
+            }
+
+            .hero-logo {
+                font-size: 22vw;
+
+                letter-spacing: -10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .producto {
+                height: 400px;
+            }
+
+            .cookies {
+                left: 15px;
+
+                bottom: 15px;
+
+                width: calc(100% - 30px);
+            }
+
+            footer {
+                flex-direction: column;
+
+                gap: 15px;
+
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="logo">
+            TIENDA DE ROPA
+        </div>
+
+        <div class="search">
+            BUSCAR
+        </div>
+
+        <nav class="menu">
+
+            <a href="#productos">
+                CARRITO <span id="cantidad">0</span>
+            </a>
+
+            <a href="#">
+                Iniciar sesión
+            </a>
+
+            <a href="#contacto">
+                Ayuda
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         INICIO
+    ========================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-logo">
+                ABRIGO
+            </div>
+
+            <a
+                href="#productos"
+                class="arrow"
+            >
+                →
+            </a>
+
+        </section>
+
+
+        <!-- =========================
+             PRODUCTOS
+        ========================= -->
+
+        <section
+            class="productos"
+            id="productos"
+        >
+
+            <h2 class="titulo-seccion">
+                Nueva colección
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="producto">
+
+                    <span>
+                        Producto 01
+                    </span>
+
+                </div>
+
+
+                <div class="producto">
+
+                    <span>
+                        Producto 02
+                    </span>
+
+                </div>
+
+
+                <div class="producto">
+
+                    <span>
+                        Producto 03
+                    </span>
+
+                </div>
+
+
+                <div class="producto">
+
+                    <span>
+                        Producto 04
+                    </span>
+
+                </div>
+
+
+                <div class="producto">
+
+                    <span>
+                        Producto 05
+                    </span>
+
+                </div>
+
+
+                <div class="producto">
+
+                    <span>
+                        Producto 06
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             NOSOTROS
+        ========================= -->
+
+        <section class="nosotros">
+
+            <div class="nosotros-contenido">
+
+                <h2>
+                    Menos es más.
+                </h2>
+
+                <p>
+                    Una página minimalista, elegante
+                    y limpia. Podemos cambiar todo:
+                    colores, imágenes, textos, botones,
+                    animaciones, productos y estructura.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================
+         COOKIES
+    ========================= -->
+
+    <div
+        class="cookies"
+        id="cookies"
+    >
+
+        <button onclick="cerrarCookies()">
+            ×
+        </button>
+
+        <p>
+            Utilizamos cookies propias y de terceros
+            con fines analíticos y para mostrarte
+            anuncios en relación con tus preferencias,
+            según tus hábitos y tu perfil.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer id="contacto">
+
+        <span>
+            Mi página web
+        </span>
+
+        <span>
+            © 2026
+        </span>
+
+        <span>
+            Contacto
+        </span>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        function cerrarCookies() {
+
+            document.getElementById("cookies").style.display = "none";
+
+        }
+
+    </script>
+
+
+</body>
+</html>
