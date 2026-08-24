@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categorias extends Model
+class MetodosPagos extends Model
 {
-    protected $table = 'categorias';
-    protected $primaryKey = 'id';
+protected $table = 'metodos_pagos';
+    protected $primaryKey = 'id_metodo_pago';
     public $timestamps = false; 
     protected $fillable = [
-        'nombre', 'descripcion',
+        'nombre',
     ];
 }

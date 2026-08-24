@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EstadosPedidos;
+use App\Models\Marcas;
 use Illuminate\Http\Request;
 
-class EstadosPedidosController extends Controller
+class MarcasController extends Controller
 {
-     public function index()
+public function index()
     {
-        $estados = EstadosPedidos::all();
+        $marcas = Marcas::all();
 
-        return view('estados_pedidos', compact('estados'));
+        return view('marcas.index', compact('marcas'));
     }
-      public function store(Request $request)
+
+    public function store(Request $request)
     {
         $Datosvalidados=$request->validate([
             'nombre' => 'required|string|max:100',
@@ -22,10 +23,10 @@ class EstadosPedidosController extends Controller
             'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
         ]);
 
-        EstadosPedidos::create([
+        Marcas::create([
             'nombre' => $Datosvalidados['nombre'],
         ]);
 
-        return redirect('/estados-pedidos');
+        return redirect('/marcas');
     }
 }
