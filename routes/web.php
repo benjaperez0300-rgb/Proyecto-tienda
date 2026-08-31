@@ -8,6 +8,9 @@ use App\Http\Controllers\MarcasController;
 use App\Http\Controllers\MetodosPagosController;
 use App\Http\Controllers\TallesController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ProductosProveedorController;
+use App\Http\Controllers\ProductosVariantesController;
 
 Route::get('/estados-pedidos', [EstadosPedidosController::class, 'index']);
 
@@ -44,3 +47,27 @@ Route::post('/proveedores', [ProveedorController::class, 'store']) ->name('prove
 Route::get('/proveedores/{id}/edit', [ProveedorController::class, 'edit']) ->name('proveedores.edit');
 
 Route::put('/proveedores/{id}', [ProveedorController::class, 'update']) ->name('proveedores.update');
+
+Route::get('/productos', [ProductosController::class, 'index']) ->name('productos.index');
+
+Route::post('/productos', [ProductosController::class, 'store']) ->name('productos.store');
+
+Route::get('/productos/{id}/edit', [ProductosController::class, 'edit']) ->name('productos.edit');
+
+Route::put('/productos/{id}', [ProductosController::class, 'update']) ->name('productos.update');
+
+Route::get('/productos-proveedor', [ProductosProveedorController::class, 'index']) ->name('productos_proveedor.index');
+
+Route::post('/productos-proveedor', [ProductosProveedorController::class, 'store']) ->name('productos_proveedor.store');
+
+Route::get('/productos-variantes', [ProductosVariantesController::class, 'index']) ->name('admin.productosVariantes.index');
+
+Route::post('/productos-variantes', [ProductosVariantesController::class, 'store']) ->name('admin.productosVariantes.store');
+
+Route::get('/productos-variantes/{id}/edit', [ProductosVariantesController::class, 'edit']) ->name('admin.productosVariantes.edit');
+
+Route::put('/productos-variantes/{id}', [ProductosVariantesController::class, 'update']) ->name('admin.productosVariantes.update');
+
+Route::get('/', function () {
+    return view('frontend.pagina');
+});
