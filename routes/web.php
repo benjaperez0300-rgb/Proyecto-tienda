@@ -71,3 +71,11 @@ Route::put('/productos-variantes/{id}', [ProductosVariantesController::class, 'u
 Route::get('/', function () {
     return view('frontend.pagina');
 });
+
+Route::get('/registro', function () {
+    return view('frontend.registro');
+});
+
+Route::get('/login', function () {
+    return view('frontend.iniciar-sesion');
+});
