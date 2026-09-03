@@ -43,10 +43,6 @@
                 Iniciar sesión
             </a>
 
-            <a href="#contacto">
-                Ayuda
-            </a>
-
         </nav>
 
     </header>
@@ -174,29 +170,6 @@
 
 
     </main>
-
-
-    <!-- =========================
-         COOKIES
-    ========================= -->
-
-    <div
-        class="cookies"
-        id="cookies"
-    >
-
-        <button onclick="cerrarCookies()">
-            ×
-        </button>
-
-        <p>
-            Utilizamos cookies propias y de terceros
-            con fines analíticos y para mostrarte
-            anuncios en relación con tus preferencias,
-            según tus hábitos y tu perfil.
-        </p>
-
-    </div>
 
 
     <!-- =========================

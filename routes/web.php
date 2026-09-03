@@ -11,6 +11,8 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ProductosProveedorController;
 use App\Http\Controllers\ProductosVariantesController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\PedidoController;
 
 Route::get('/estados-pedidos', [EstadosPedidosController::class, 'index']);
 
@@ -67,6 +69,22 @@ Route::post('/productos-variantes', [ProductosVariantesController::class, 'store
 Route::get('/productos-variantes/{id}/edit', [ProductosVariantesController::class, 'edit']) ->name('admin.productosVariantes.edit');
 
 Route::put('/productos-variantes/{id}', [ProductosVariantesController::class, 'update']) ->name('admin.productosVariantes.update');
+
+Route::get('/usuarios', [UsuariosController::class, 'index']) ->name('usuarios.index');
+
+Route::post('/usuarios', [UsuariosController::class, 'store']) ->name('usuarios.store');
+
+Route::get('/usuarios/{id}/edit', [UsuariosController::class, 'edit']) ->name('usuarios.edit');
+
+Route::put('/usuarios/{id}', [UsuariosController::class, 'update']) ->name('usuarios.update');
+
+Route::get('/pedidos', [PedidoController::class, 'index']) ->name('pedidos.index');
+
+Route::post('/pedidos', [PedidoController::class, 'store']) ->name('pedidos.store');
+
+Route::get('/pedidos/{id_pedidos}/edit', [PedidoController::class, 'edit']) ->name('pedidos.edit');
+
+Route::put('/pedidos/{id_pedidos}', [PedidoController::class, 'update']) ->name('pedidos.update');
 
 Route::get('/', function () {
     return view('frontend.pagina');

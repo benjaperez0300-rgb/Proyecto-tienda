@@ -39,7 +39,14 @@ class ProveedorController extends Controller
             'direccion.max' => 'La dirección no puede superar los 200 caracteres.',
         ]);
 
-        Proveedor::create($Datosvalidados);
+        Proveedor::create([
+            'nombre_empresa' => $Datosvalidados['nombre_empresa'],
+            'celular' => $Datosvalidados['celular'],
+            'email' => $Datosvalidados['email'],
+            'rut' => $Datosvalidados['rut'],
+            'codigo_postal' => $Datosvalidados['codigo_postal'],
+            'direccion' => $Datosvalidados['direccion'],
+        ]);
 
         return redirect()
            ->route ('proveedores.index')

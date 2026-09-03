@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Colores extends Model
 {
 protected $table = 'colores';
-    protected $primaryKey = 'id_color';
+    protected $primaryKey = 'id';
     public $timestamps = false; 
     protected $fillable = [
         'nombre', 'codigo_hex',

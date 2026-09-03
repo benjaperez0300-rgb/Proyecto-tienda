@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductosProveedor extends Model
 {
     protected $table = 'productos_proveedor';
-    protected $primaryKey = 'id_producto_proveedor';
+    protected $primaryKey = 'id';
     public $timestamps = false; 
     protected $fillable = [
         'productos_id',

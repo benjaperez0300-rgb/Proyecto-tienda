@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Talles extends Model
 {
 protected $table = 'talles';
-    protected $primaryKey = 'id_talle';
+    protected $primaryKey = 'id';
     public $timestamps = false; 
     protected $fillable = [
         'nombre',

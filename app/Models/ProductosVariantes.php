@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductosVariantes extends Model
 {
-    protected $table = 'productos_variantes';
-    protected $primaryKey = 'id_producto_variante';
+    protected $table = 'producto_variantes';
+    protected $primaryKey = 'id';
     public $timestamps = false; 
     protected $fillable = [
         'productos_id',
