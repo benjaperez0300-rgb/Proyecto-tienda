@@ -21,7 +21,7 @@ class ProductosController extends Controller
         $Datosvalidados=$request->validate([
             'nombre' => 'required|string|max:100',
             'codigo_barra' => 'required|string|max:20',
-            'precio' => 'required|numeric',
+            'precio' => 'required|numeric|min:0',
             'material' => 'required|string|max:50',
             'genero' => 'required|string|max:20',
             'marcas_id' => 'required|exists:marcas,id_marca',
@@ -70,7 +70,7 @@ class ProductosController extends Controller
         $Datosvalidados=$request->validate([
             'nombre' => 'required|string|max:100',
             'codigo_barra' => 'required|string|max:20',
-            'precio' => 'required|numeric',
+            'precio' => 'required|numeric|min:0',
             'material' => 'required|string|max:50',
             'genero' => 'required|string|max:20',
             'marcas_id' => 'required|exists:marcas,id_marca',

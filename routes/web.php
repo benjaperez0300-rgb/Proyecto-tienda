@@ -13,6 +13,14 @@ use App\Http\Controllers\ProductosProveedorController;
 use App\Http\Controllers\ProductosVariantesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PagosController;
+use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\ComprasController;
+use App\Http\Controllers\DetalleComprasController;
+use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\Carrito_ProductosController;
+use App\Http\Controllers\Movimiento_inventarioController;
+use App\Http\Controllers\Pedidos_productosController;
 
 Route::get('/estados-pedidos', [EstadosPedidosController::class, 'index']);
 
@@ -85,6 +93,66 @@ Route::post('/pedidos', [PedidoController::class, 'store']) ->name('pedidos.stor
 Route::get('/pedidos/{id_pedidos}/edit', [PedidoController::class, 'edit']) ->name('pedidos.edit');
 
 Route::put('/pedidos/{id_pedidos}', [PedidoController::class, 'update']) ->name('pedidos.update');
+
+Route::get('/pagos', [PagosController::class, 'index']) ->name('pagos.index');
+
+Route::post('/pagos', [PagosController::class, 'store']) ->name('pagos.store');
+
+Route::get('/pagos/{id}/edit', [PagosController::class, 'edit']) ->name('pagos.edit');
+
+Route::put('/pagos/{id}', [PagosController::class, 'update']) ->name('pagos.update');
+
+Route::get('/facturas', [FacturaController::class, 'index']) ->name('facturas.index');
+
+Route::post('/facturas', [FacturaController::class, 'store']) ->name('facturas.store');
+
+Route::get('/facturas/{id}/edit', [FacturaController::class, 'edit']) ->name('facturas.edit');
+
+Route::put('/facturas/{id}', [FacturaController::class, 'update']) ->name('facturas.update');
+
+Route::get('/compras', [ComprasController::class, 'index']) ->name('compras.index');
+
+Route::post('/compras', [ComprasController::class, 'store']) ->name('compras.store');
+
+Route::get('/compras/{id}/edit', [ComprasController::class, 'edit']) ->name('compras.edit');
+
+Route::put('/compras/{id}', [ComprasController::class, 'update']) ->name('compras.update');
+
+Route::get('/detalle-compras', [DetalleComprasController::class, 'index']) ->name('detalle_compras.index');
+
+Route::post('/detalle-compras', [DetalleComprasController::class, 'store']) ->name('detalle_compras.store');
+
+Route::get('/detalle-compras/{id}/edit', [DetalleComprasController::class, 'edit']) ->name('detalle_compras.edit');
+
+Route::put('/detalle-compras/{id}', [DetalleComprasController::class, 'update']) ->name('detalle_compras.update');
+
+Route::get('/carrito', [CarritoController::class, 'index']) ->name('carrito.index');
+
+Route::post('/carrito', [CarritoController::class, 'store']) ->name('carrito.store');
+
+Route::get('/carrito-productos', [Carrito_ProductosController::class, 'index']) ->name('carrito_productos.index');
+
+Route::post('/carrito-productos', [Carrito_ProductosController::class, 'store']) ->name('carrito_productos.store');
+
+Route::get('/carrito-productos/{id}/edit', [Carrito_ProductosController::class, 'edit']) ->name('carrito_productos.edit');
+
+Route::put('/carrito-productos/{id}', [Carrito_ProductosController::class, 'update']) ->name('carrito_productos.update');
+
+Route::get('/movimiento-inventario', [Movimiento_inventarioController::class, 'index']) ->name('movimiento_inventario.index');
+
+Route::post('/movimiento-inventario', [Movimiento_inventarioController::class, 'store']) ->name('movimiento_inventario.store');
+
+Route::get('/movimiento-inventario/{id}/edit', [Movimiento_inventarioController::class, 'edit']) ->name('movimiento_inventario.edit');
+
+Route::put('/movimiento-inventario/{id}', [Movimiento_inventarioController::class, 'update']) ->name('movimiento_inventario.update');
+
+Route::get('/pedidos-productos', [Pedidos_productosController::class, 'index']) ->name('pedidos_productos.index');
+
+Route::post('/pedidos-productos', [Pedidos_productosController::class, 'store']) ->name('pedidos_productos.store');
+
+Route::get('/pedidos-productos/{id}/edit', [Pedidos_productosController::class, 'edit']) ->name('pedidos_productos.edit');
+
+Route::put('/pedidos-productos/{id}', [Pedidos_productosController::class, 'update']) ->name('pedidos_productos.update');
 
 Route::get('/', function () {
     return view('frontend.pagina');
