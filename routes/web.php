@@ -17,10 +17,11 @@ use App\Http\Controllers\PagosController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\DetalleComprasController;
-use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CarritosController;
 use App\Http\Controllers\Carrito_ProductosController;
 use App\Http\Controllers\Movimiento_inventarioController;
 use App\Http\Controllers\Pedidos_productosController;
+
 
 Route::get('/estados-pedidos', [EstadosPedidosController::class, 'index']);
 
@@ -126,10 +127,6 @@ Route::get('/detalle-compras/{id}/edit', [DetalleComprasController::class, 'edit
 
 Route::put('/detalle-compras/{id}', [DetalleComprasController::class, 'update']) ->name('detalle_compras.update');
 
-Route::get('/carrito', [CarritoController::class, 'index']) ->name('carrito.index');
-
-Route::post('/carrito', [CarritoController::class, 'store']) ->name('carrito.store');
-
 Route::get('/carrito-productos', [Carrito_ProductosController::class, 'index']) ->name('carrito_productos.index');
 
 Route::post('/carrito-productos', [Carrito_ProductosController::class, 'store']) ->name('carrito_productos.store');
@@ -154,14 +151,99 @@ Route::get('/pedidos-productos/{id}/edit', [Pedidos_productosController::class, 
 
 Route::put('/pedidos-productos/{id}', [Pedidos_productosController::class, 'update']) ->name('pedidos_productos.update');
 
-Route::get('/', function () {
-    return view('frontend.pagina');
-});
+// =========================
+// TIENDA
+// =========================
+
+Route::get('/tienda', function () {
+
+    if (!session('usuario_id')) {
+        return redirect()->route('login');
+    }
+
+    return view('tienda.pagina');
+
+})->name('tienda.pagina');
+
+
+// =========================
+// REGISTRO
+// =========================
 
 Route::get('/registro', function () {
-    return view('frontend.registro');
+    return view('tienda.registro');
+})->name('registro');
+
+Route::post('/registro', [UsuariosController::class, 'store'])
+    ->name('registro.store');
+
+
+// =========================
+// LOGIN
+// =========================
+
+Route::get('/iniciar-sesion', [UsuariosController::class, 'showLogin'])
+    ->name('login');
+
+Route::post('/iniciar-sesion', [UsuariosController::class, 'login'])
+    ->name('login.post');
+
+
+// =========================
+// LOGOUT
+// =========================
+
+Route::post('/logout', [UsuariosController::class, 'logout'])
+    ->name('logout');
+
+
+// =========================
+// ADMIN
+// =========================
+
+Route::get('/admin', function () {
+
+    if (!session('usuario_id')) {
+        return redirect()->route('login');
+    }
+
+    if (session('usuario_rol') !== 'admin') {
+        return redirect()->route('tienda.pagina');
+    }
+
+    return view('admin.inicio');
+
+})->name('admin.inicio');
+
+
+// =========================
+// INICIO
+// =========================
+
+Route::get('/', function () {
+    return view('tienda.inicio');
 });
 
-Route::get('/login', function () {
-    return view('frontend.iniciar-sesion');
-});
+// =========================
+// CARRITO
+// =========================
+
+Route::get('/carrito', [CarritosController::class, 'index'])
+    ->name('tienda.carrito');
+
+Route::post('/carrito', [CarritosController::class, 'store'])
+    ->name('carrito.store');
+
+
+// =========================
+// PRODUCTOS DEL CARRITO
+// =========================
+
+Route::post('/carrito/producto', [Carrito_ProductosController::class, 'store'])
+    ->name('carrito_productos.store');
+
+Route::put('/carrito/producto/{id}', [Carrito_ProductosController::class, 'actualizar'])
+    ->name('carrito_productos.actualizar');
+
+Route::delete('/carrito/producto/{id}', [Carrito_ProductosController::class, 'destroy'])
+    ->name('carrito_productos.destroy');

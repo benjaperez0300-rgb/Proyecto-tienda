@@ -1,23 +1,17 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Tienda</title>
-     <link
-        rel="stylesheet"
-        href="{{ asset('css/pagina.css') }}"
-    >
-</head>
-<body>
-    
-</body>
-</html>
+
+    <link rel="stylesheet" href="{{ asset('css/pagina.css') }}">
 </head>
 
-
 <body>
-
 
     <!-- =========================
          HEADER
@@ -35,13 +29,20 @@
 
         <nav class="menu">
 
-            <a href="#registro">
-                Registrarse<span id="cantidad">0</span>
+            <a href="/">
+                Inicio
             </a>
 
-            <a href="#login">
-                Iniciar sesión
-            </a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+
+
+               <button type="submit">
+                    Cerrar sesión
+                </button>
+            </form>
+
+            <a href="carrito">carrito</a>
 
         </nav>
 
@@ -85,60 +86,41 @@
 
             <div class="grid">
 
-
                 <div class="producto">
-
                     <span>
                         Producto 01
                     </span>
-
                 </div>
 
-
                 <div class="producto">
-
                     <span>
                         Producto 02
                     </span>
-
                 </div>
 
-
                 <div class="producto">
-
                     <span>
                         Producto 03
                     </span>
-
                 </div>
 
-
                 <div class="producto">
-
                     <span>
                         Producto 04
                     </span>
-
                 </div>
 
-
                 <div class="producto">
-
                     <span>
                         Producto 05
                     </span>
-
                 </div>
 
-
                 <div class="producto">
-
                     <span>
                         Producto 06
                     </span>
-
                 </div>
-
 
             </div>
 
@@ -146,7 +128,7 @@
 
 
         <!-- =========================
-             NOSOTROS
+             SOBRE NOSOTROS
         ========================= -->
 
         <section class="nosotros">
@@ -168,7 +150,6 @@
 
         </section>
 
-
     </main>
 
 
@@ -186,11 +167,8 @@
             © 2026
         </span>
 
-        <span>
-            Contacto
-        </span>
-
     </footer>
 
 </body>
+
 </html>

@@ -4,18 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class TiendaController extends Controller
+class UsuariosController extends Controller
 {
     public function index()
     {
         $usuarios = Usuarios::all();
-        return view('tienda.index', compact('usuarios'));
-    }
-
-    public function create()
-    {
-        return view('tienda.create');
+        return view('tienda.pagina', compact('usuarios'));
     }
 
     public function store(Request $request)
@@ -27,8 +23,7 @@ class TiendaController extends Controller
             'password' => 'required|string|min:6',
             'telefono' => 'nullable|string|max:20',
             'direccion' => 'nullable|string|max:255',
-            'fecha_nacimiento' => 'nullable|date',
-            'rol' => 'required|string|max:50',
+            'fecha_nac' => 'nullable|date',
         ],[
             'nombre.required' => 'El nombre es obligatorio.',
             'apellido.required' => 'El apellido es obligatorio.',
@@ -37,7 +32,6 @@ class TiendaController extends Controller
             'email.unique' => 'El correo electrónico ya está en uso.',
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
-            'rol.required' => 'El rol es obligatorio.',
         ]);
 
         Usuarios::create([
@@ -47,11 +41,11 @@ class TiendaController extends Controller
             'password' => bcrypt($DatosValidados['password']),
             'telefono' => $DatosValidados['telefono'] ?? null,
             'direccion' => $DatosValidados['direccion'] ?? null,
-            'fecha_nacimiento' => $DatosValidados['fecha_nacimiento'] ?? null,
-            'rol' => $DatosValidados['rol'],
+            'fecha_nac' => $DatosValidados['fecha_nac'] ?? null,
+            'rol' => 'cliente',
         ]);
 
-        return redirect()->route('tienda.index')->with('success', 'Usuario creado exitosamente.');
+        return redirect()->route('tienda.pagina')->with('success', 'Usuario creado exitosamente.');
     }
     public function edit($id)
     {
@@ -63,23 +57,65 @@ class TiendaController extends Controller
         $DatosValidados = $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email,' . $id . ',id_usuario',
+            'email' => 'required|email|unique:usuarios,email,' . $id . ',id',
             'telefono' => 'nullable|string|max:20',
             'direccion' => 'nullable|string|max:255',
-            'fecha_nacimiento' => 'nullable|date',
-            'rol' => 'required|string|max:50',
+            'fecha_nac' => 'nullable|date',
         ],[
             'nombre.required' => 'El nombre es obligatorio.',
             'apellido.required' => 'El apellido es obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe ser una dirección válida.',
             'email.unique' => 'El correo electrónico ya está en uso.',
-            'rol.required' => 'El rol es obligatorio.',
         ]);
 
         $usuario = Usuarios::findOrFail($id);
         $usuario->update($DatosValidados);
 
-        return redirect()->route('tienda.index')->with('success', 'Usuario actualizado exitosamente.');
+        return redirect()->route('tienda.pagina')->with('success', 'Usuario actualizado exitosamente.');
     } 
+   public function login(Request $request)
+{
+    $DatosValidados = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string',
+    ]);
+
+    $usuario = Usuarios::where('email', $DatosValidados['email'])->first();
+
+    if (!$usuario || !Hash::check($DatosValidados['password'], $usuario->password)) {
+        return back()->withErrors([
+            'email' => 'El correo o la contraseña son incorrectos.'
+        ]);
+    }
+
+    $request->session()->regenerate();
+
+    session([
+        'usuario_id' => $usuario->id,
+        'usuario_rol' => $usuario->rol,
+    ]);
+
+    if ($usuario->rol === 'admin') {
+        return redirect()->route('admin.inicio');
+    }
+
+    return redirect()->route('tienda.pagina');
+}
+public function showLogin()
+{
+    return view('tienda.iniciar-sesion');
+}
+public function logout(Request $request)
+{
+    $request->session()->forget([
+        'usuario_id',
+        'usuario_rol',
+    ]);
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('login');
+}
 }

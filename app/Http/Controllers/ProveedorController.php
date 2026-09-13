@@ -20,7 +20,7 @@ class ProveedorController extends Controller
             'nombre_empresa' => 'required|string|max:100',
             'celular' => 'required|string|max:20',
             'email' => 'required|email|max:100',
-            'rut' => 'required|string|max:12',
+            'rut' => 'required|unique|string|max:12',
             'codigo_postal' => 'required|string|max:10',
             'direccion' => 'required|string|max:200',
         ],[

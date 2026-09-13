@@ -12,7 +12,6 @@ class Compras extends Model
     protected $fillable = [
         'proveedor_id',
         'producto_id',
-        'cantidad',
         'fecha',
         'total',
     ];

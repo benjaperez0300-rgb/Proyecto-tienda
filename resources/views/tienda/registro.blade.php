@@ -14,11 +14,10 @@
         </div>
 
         <nav class="menu">
-            <a href="#registro">
-                Registrarse <span id="cantidad">0</span>
+            <a href="registro">
+                Registrarse <span id="cantidad"></span>
             </a>
-            <a href="#login">Iniciar sesión</a>
-            <a href="#contacto">Ayuda</a>
+            <a href="login">Iniciar sesión</a>
         </nav>
     </header>
 

@@ -16,7 +16,7 @@ class Usuarios extends Model
         'password',
         'telefono',
         'direccion',
-        'fecha_nacimiento',
+        'fecha_nac',
         'rol',
     ];
 }

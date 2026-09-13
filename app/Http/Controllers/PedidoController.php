@@ -95,7 +95,16 @@ class PedidosController extends Controller
            ->route('pedidos.index')
            ->with('mensaje', "Pedido actualizado correctamente.");
     }
-    
+    public function direccion()
+{
+    if (!session('usuario_id')) {
+        return redirect()->route('login');
+    }
+
+    $usuario = Usuarios::findOrFail(session('usuario_id'));
+
+    return view('tienda.direccion', compact('usuario'));
+}
 
 
 }    

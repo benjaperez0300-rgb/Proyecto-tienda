@@ -3,73 +3,170 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrito_Productos;
-use App\Models\Carrito;
-use App\Models\Producto;
+use App\Models\Carritos;
 use Illuminate\Http\Request;
 
 class Carrito_ProductosController extends Controller
 {
-    public function index()
-    {
-        $carrito_productos = Carrito_Productos::all();
-        return view('admin.Carrito_Productos_edit', compact('carrito_productos'));
-    }
-
     public function store(Request $request)
     {
+        if (!session('usuario_id')) {
+            return redirect()->route('login');
+        }
+
+        // Validar producto y cantidad
         $DatosValidados = $request->validate([
-            'carrito_id' => 'required|exists:carrito,id',
-            'producto_id' => 'required|exists:productos,id',
+            'productos_id' => 'required|exists:productos,id',
             'cantidad' => 'required|integer|min:1',
         ], [
-            'carrito_id.required' => 'El ID del carrito es obligatorio.',
-            'carrito_id.exists' => 'El carrito seleccionado no existe.',
-            'producto_id.required' => 'El ID del producto es obligatorio.',
-            'producto_id.exists' => 'El producto seleccionado no existe.',
+            'productos_id.required' => 'El producto es obligatorio.',
+            'productos_id.exists' => 'El producto seleccionado no existe.',
             'cantidad.required' => 'La cantidad es obligatoria.',
             'cantidad.integer' => 'La cantidad debe ser un número entero.',
             'cantidad.min' => 'La cantidad debe ser mayor o igual a 1.',
         ]);
 
-        Carrito_Productos::create([
-            'carrito_id' => $DatosValidados['carrito_id'],
-            'producto_id' => $DatosValidados['producto_id'],
-            'cantidad' => $DatosValidados['cantidad'],
-        ]);
+        // Buscar el carrito del usuario
+        $carrito = Carrito::where(
+            'usuarios_id',
+            session('usuario_id')
+        )->first();
 
-        return redirect()->route('carrito_productos.index')->with('success', 'Producto agregado al carrito exitosamente.');
-    }
-    public function edit($id)
-    {
-        $carrito_producto = Carrito_Productos::findOrFail($id);
-        $carritos = Carrito::all();
-        $productos = Producto::all();
+        // Si no tiene carrito, crearlo
+        if (!$carrito) {
+            $carrito = Carrito::create([
+                'usuarios_id' => session('usuario_id')
+            ]);
+        }
 
-        return view('admin.Carrito_Productos_edit', compact('carrito_producto', 'carritos', 'productos'));
+        // Buscar si el producto ya está en el carrito
+        $carritoProducto = Carrito_Productos::where(
+            'carritos_id',
+            $carrito->id
+        )
+        ->where(
+            'productos_id',
+            $DatosValidados['productos_id']
+        )
+        ->first();
+
+        // Si ya existe, aumentar cantidad
+        if ($carritoProducto) {
+
+            $carritoProducto->cantidad += $DatosValidados['cantidad'];
+            $carritoProducto->save();
+
+        } else {
+
+            // Si no existe, agregarlo
+            Carrito_Productos::create([
+                'carritos_id' => $carrito->id,
+                'productos_id' => $DatosValidados['productos_id'],
+                'cantidad' => $DatosValidados['cantidad'],
+            ]);
+        }
+
+        return redirect()
+            ->route('tienda.carrito')
+            ->with('success', 'Producto agregado al carrito.');
     }
-    public function update(Request $request, $id)
+
+
+    public function actualizar(Request $request, $id)
     {
+        // Verificar que el usuario haya iniciado sesión
+        if (!session('usuario_id')) {
+            return redirect()->route('login');
+        }
+
+        // Validar cantidad
         $DatosValidados = $request->validate([
-            'carrito_id' => 'required|exists:carrito,id',
-            'producto_id' => 'required|exists:productos,id',
             'cantidad' => 'required|integer|min:1',
         ], [
-            'carrito_id.required' => 'El ID del carrito es obligatorio.',
-            'carrito_id.exists' => 'El carrito seleccionado no existe.',
-            'producto_id.required' => 'El ID del producto es obligatorio.',
-            'producto_id.exists' => 'El producto seleccionado no existe.',
             'cantidad.required' => 'La cantidad es obligatoria.',
             'cantidad.integer' => 'La cantidad debe ser un número entero.',
             'cantidad.min' => 'La cantidad debe ser mayor o igual a 1.',
         ]);
 
-        $carrito_producto = Carrito_Productos::findOrFail($id);
-        $carrito_producto->update([
-            'carrito_id' => $DatosValidados['carrito_id'],
-            'producto_id' => $DatosValidados['producto_id'],
+        // Buscar el carrito del usuario
+        $carrito = Carrito::where(
+            'usuarios_id',
+            session('usuario_id')
+        )->first();
+
+        if (!$carrito) {
+            return redirect()
+                ->route('tienda.carrito')
+                ->with('error', 'No se encontró tu carrito.');
+        }
+
+        // Buscar el producto dentro del carrito
+        $carritoProducto = Carrito_Productos::where(
+            'id',
+            $id
+        )
+        ->where(
+            'carritos_id',
+            $carrito->id
+        )
+        ->first();
+
+        if (!$carritoProducto) {
+            return redirect()
+                ->route('tienda.carrito')
+                ->with('error', 'El producto no pertenece a tu carrito.');
+        }
+
+        // Actualizar cantidad
+        $carritoProducto->update([
             'cantidad' => $DatosValidados['cantidad'],
         ]);
 
-        return redirect()->route('carrito_productos.index')->with('success', 'Producto en el carrito actualizado exitosamente.');
+        return redirect()
+            ->route('tienda.carrito')
+            ->with('success', 'Cantidad actualizada correctamente.');
+    }
+
+
+    public function destroy($id)
+    {
+        // Verificar que el usuario haya iniciado sesión
+        if (!session('usuario_id')) {
+            return redirect()->route('login');
+        }
+
+        // Buscar el carrito del usuario
+        $carrito = Carrito::where(
+            'usuarios_id',
+            session('usuario_id')
+        )->first();
+
+        if (!$carrito) {
+            return redirect()
+                ->route('tienda.carrito')
+                ->with('error', 'No se encontró tu carrito.');
+        }
+
+        $carritoProducto = Carrito_Productos::where(
+            'id',
+            $id
+        )
+        ->where(
+            'carritos_id',
+            $carrito->id
+        )
+        ->first();
+
+        if (!$carritoProducto) {
+            return redirect()
+                ->route('tienda.carrito')
+                ->with('error', 'El producto no pertenece a tu carrito.');
+        }
+
+        $carritoProducto->delete();
+
+        return redirect()
+            ->route('tienda.carrito')
+            ->with('success', 'Producto eliminado del carrito.');
     }
 }
