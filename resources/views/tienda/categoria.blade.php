@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
@@ -9,13 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-        Catálogo - Nuestra Tienda
+        {{ $categoria->nombre }} - Tienda de Ropa
     </title>
 
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/pagina.css') }}"
-    >
+    <link rel="stylesheet" href="{{ asset('css/pagina.css') }}">
 
 </head>
 
@@ -40,34 +36,27 @@
 
         <nav class="menu">
 
-
             @if (session()->has('usuario_id'))
-
 
                 <a href="{{ route('tienda.pagina') }}">
                     Inicio
                 </a>
 
-
                 <a href="{{ route('tienda.categorias') }}">
                     Categorías
                 </a>
-
 
                 <a href="{{ route('tienda.catalogo') }}">
                     Catálogo
                 </a>
 
-
                 <a href="{{ route('tienda.carrito') }}">
                     Carrito
                 </a>
 
-
                 <a href="{{ route('perfil') }}">
                     Mi perfil
                 </a>
-
 
                 <form
                     action="{{ route('logout') }}"
@@ -82,42 +71,33 @@
 
                 </form>
 
-
             @else
-
 
                 <a href="{{ route('tienda.pagina') }}">
                     Inicio
                 </a>
 
-
                 <a href="{{ route('tienda.categorias') }}">
                     Categorías
                 </a>
-
 
                 <a href="{{ route('tienda.catalogo') }}">
                     Catálogo
                 </a>
 
-
                 <a href="{{ route('tienda.carrito') }}">
                     Carrito
                 </a>
-
 
                 <a href="{{ route('registro') }}">
                     Registrarse
                 </a>
 
-
                 <a href="{{ route('login') }}">
                     Iniciar sesión
                 </a>
 
-
             @endif
-
 
         </nav>
 
@@ -131,7 +111,6 @@
 
     <main>
 
-
         <section class="productos">
 
 
@@ -141,16 +120,25 @@
 
             <h1 class="titulo-seccion">
 
-                Nuestro catálogo
+                {{ $categoria->nombre }}
 
             </h1>
 
 
-            <p class="subtitulo-seccion">
 
-                Explora todos nuestros productos
+            <!-- =========================
+                 DESCRIPCIÓN
+            ========================== -->
 
-            </p>
+            @if ($categoria->descripcion)
+
+                <p class="descripcion-categoria">
+
+                    {{ $categoria->descripcion }}
+
+                </p>
+
+            @endif
 
 
 
@@ -160,38 +148,30 @@
 
             @if ($productos->isEmpty())
 
-
                 <div class="sin-categorias">
 
                     <p>
                         No hay productos disponibles
-                        en este momento.
+                        en esta categoría.
                     </p>
 
-
-                    <a href="{{ route('tienda.pagina') }}">
-
-                        Volver a la tienda
-
+                    <a href="{{ route('tienda.categorias') }}">
+                        Volver a categorías
                     </a>
 
                 </div>
 
-
             @else
-
 
                 <div class="grid">
 
 
                     @foreach ($productos as $producto)
 
-
                         <a
                             href="{{ route('tienda.producto', $producto->id) }}"
                             class="producto"
                         >
-
 
                             <div class="producto-info">
 
@@ -248,20 +228,33 @@
 
                             </div>
 
-
                         </a>
-
 
                     @endforeach
 
 
                 </div>
 
-
             @endif
 
 
         </section>
+
+
+
+        <!-- =========================
+             VOLVER
+        ========================== -->
+
+        <div class="volver-categorias">
+
+            <a href="{{ route('tienda.categorias') }}">
+
+                ← Volver a categorías
+
+            </a>
+
+        </div>
 
 
     </main>
@@ -278,11 +271,9 @@
             Mi página web
         </span>
 
-
         <span>
             © {{ date('Y') }}
         </span>
-
 
         <span>
             Contacto

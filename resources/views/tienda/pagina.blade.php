@@ -1,4 +1,4 @@
-```html
+```blade
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,20 +29,67 @@
 
         <nav class="menu">
 
-            <a href="/">
-                Inicio
-            </a>
+            @if (session()->has('usuario_id'))
 
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
+                <!-- =========================
+                     USUARIO LOGUEADO
+                ========================= -->
 
+                <a href="{{ route('tienda.pagina') }}">
+                    Inicio
+                </a>
 
-               <button type="submit">
-                    Cerrar sesión
-                </button>
-            </form>
+                <a href="{{ route('tienda.categorias') }}">
+                    Categorías
+                </a>
 
-            <a href="carrito">carrito</a>
+                <a href="{{ route('tienda.catalogo') }}">
+                    Catálogo
+                </a>
+
+                <a href="{{ route('tienda.carrito') }}">
+                    Carrito
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+
+                    <button type="submit">
+                        Cerrar sesión
+                    </button>
+                </form>
+
+            @else
+
+                <!-- =========================
+                     USUARIO NO LOGUEADO
+                ========================= -->
+
+                <a href="{{ route('tienda.pagina') }}">
+                    Inicio
+                </a>
+
+                <a href="{{ route('tienda.categorias') }}">
+                    Categorías
+                </a>
+
+                <a href="{{ route('tienda.catalogo') }}">
+                    Catálogo
+                </a>
+
+                <a href="{{ route('tienda.carrito') }}">
+                    Carrito
+                </a>
+
+                <a href="{{ route('registro') }}">
+                    Registrarse
+                </a>
+
+                <a href="{{ route('login') }}">
+                    Iniciar sesión
+                </a>
+
+            @endif
 
         </nav>
 
@@ -87,39 +134,51 @@
             <div class="grid">
 
                 <div class="producto">
+
                     <span>
                         Producto 01
                     </span>
+
                 </div>
 
                 <div class="producto">
+
                     <span>
                         Producto 02
                     </span>
+
                 </div>
 
                 <div class="producto">
+
                     <span>
                         Producto 03
                     </span>
+
                 </div>
 
                 <div class="producto">
+
                     <span>
                         Producto 04
                     </span>
+
                 </div>
 
                 <div class="producto">
+
                     <span>
                         Producto 05
                     </span>
+
                 </div>
 
                 <div class="producto">
+
                     <span>
                         Producto 06
                     </span>
+
                 </div>
 
             </div>
@@ -164,11 +223,12 @@
         </span>
 
         <span>
-            © 2026
+            © {{ date('Y') }}
         </span>
 
     </footer>
-
+<script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>
+

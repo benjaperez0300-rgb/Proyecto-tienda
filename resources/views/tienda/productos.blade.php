@@ -1,56 +1,103 @@
-```blade
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{{ $producto->nombre }} - Tienda de Ropa</title>
 
     <link rel="stylesheet" href="{{ asset('css/pagina.css') }}">
+
 </head>
 
 <body>
 
+
     <!-- =========================
-         ENCABEZADO
+         HEADER
     ========================= -->
 
-    <header class="header-principal">
+    <header>
 
-        <div class="header-left">
+        <a href="{{ route('tienda.pagina') }}" class="logo">
+            TIENDA DE ROPA
+        </a>
 
-            <button
-                class="btn-menu"
-                aria-label="Abrir menú"
-            >
-                <span></span>
-                <span></span>
-            </button>
 
-            <a href="/" class="logo">
-                TIENDA DE ROPA
-            </a>
-
+        <div class="search">
+            BUSCAR
         </div>
 
 
-        <div class="header-right">
+        <nav class="menu">
 
-            <a href="buscar" class="nav-item">
-                BUSCAR
-            </a>
+            @if (session()->has('usuario_id'))
 
-            <a href="perfil" class="nav-item">
-                MI CUENTA
-            </a>
+                <!-- =========================
+                     USUARIO LOGUEADO
+                ========================= -->
 
-            <a href="/carrito" class="nav-item carrito">
-                CARRITO <span>[ 0 ]</span>
-            </a>
+                <a href="{{ route('tienda.pagina') }}">
+                    Inicio
+                </a>
 
-        </div>
+                <a href="{{ route('tienda.categorias') }}">
+                    Categorías
+                </a>
+
+                <a href="{{ route('tienda.catalogo') }}">
+                    Catálogo
+                </a>
+
+                <a href="{{ route('tienda.carrito') }}">
+                    Carrito
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST">
+
+                    @csrf
+
+                    <button type="submit">
+                        Cerrar sesión
+                    </button>
+
+                </form>
+
+            @else
+
+                <!-- =========================
+                     USUARIO NO LOGUEADO
+                ========================= -->
+
+                <a href="{{ route('tienda.pagina') }}">
+                    Inicio
+                </a>
+
+                <a href="{{ route('tienda.categorias') }}">
+                    Categorías
+                </a>
+
+                <a href="{{ route('tienda.catalogo') }}">
+                    Catálogo
+                </a>
+
+                <a href="{{ route('tienda.carrito') }}">
+                    Carrito
+                </a>
+
+                <a href="{{ route('registro') }}">
+                    Registrarse
+                </a>
+
+                <a href="{{ route('login') }}">
+                    Iniciar sesión
+                </a>
+
+            @endif
+
+        </nav>
 
     </header>
 
@@ -61,7 +108,10 @@
 
     <main class="producto-contenedor">
 
-        <!-- GALERÍA -->
+
+        <!-- =========================
+             GALERÍA
+        ========================= -->
 
         <section class="producto-galeria">
 
@@ -93,9 +143,12 @@
         </section>
 
 
-        <!-- INFORMACIÓN DEL PRODUCTO -->
+        <!-- =========================
+             INFORMACIÓN
+        ========================= -->
 
         <section class="producto-detalle">
+
 
             <div class="producto-cabecera">
 
@@ -103,17 +156,12 @@
                     {{ $producto->nombre }}
                 </h1>
 
-                <button
-                    class="btn-favorito"
-                    aria-label="Guardar en favoritos"
-                >
-                    ♡
-                </button>
-
             </div>
 
 
-            <!-- PRECIO -->
+            <!-- =========================
+                 PRECIO
+            ========================= -->
 
             <div class="producto-precio">
 
@@ -124,108 +172,117 @@
             </div>
 
 
-            <!-- CUOTAS -->
+            <!-- =========================
+                 CUOTAS
+            ========================= -->
 
             <p class="nota-cuotas">
                 *POSIBILIDAD DE PAGO EN CUOTAS SIN INTERESES
             </p>
 
 
-            <!-- CÓDIGO DE BARRA -->
+            <!-- =========================
+                 CÓDIGO DE BARRA
+            ========================= -->
 
             <div class="producto-variante">
 
                 <span class="color-codigo">
-                    CÓDIGO | {{ $producto->codigo_barra }}
+
+                    CÓDIGO |
+                    {{ $producto->codigo_barra }}
+
                 </span>
 
             </div>
 
 
-            <!-- INFORMACIÓN -->
+            <!-- =========================
+                 INFORMACIÓN
+            ========================= -->
 
             <div class="producto-descripcion">
 
                 <p>
-                    <strong>Material:</strong>
+
+                    <strong>
+                        Material:
+                    </strong>
+
                     {{ $producto->material }}
+
                 </p>
 
+
                 <p>
-                    <strong>Género:</strong>
+
+                    <strong>
+                        Género:
+                    </strong>
+
                     {{ $producto->genero }}
+
                 </p>
 
             </div>
 
 
-            <!-- FORMULARIO -->
+            <!-- =========================
+                 AGREGAR AL CARRITO
+            ========================= -->
 
-            <form
-                action="/carrito/agregar"
-                method="POST"
-                class="form-producto"
-            >
+            @if (session()->has('usuario_id'))
 
-                @csrf
-
-                <input
-                    type="hidden"
-                    name="producto_id"
-                    value="{{ $producto->id }}"
+                <form
+                    action="{{ route('carrito.store') }}"
+                    method="POST"
+                    class="form-producto"
                 >
 
+                    @csrf
 
-                <!-- TALLE -->
 
-                <div class="grupo-selector">
-
-                    <label
-                        for="talle"
-                        class="label-oculto"
-                    >
-                        Seleccionar Talle
-                    </label>
-
-                    <select
-                        name="talle"
-                        id="talle"
-                        class="select-talle"
-                        required
+                    <input
+                        type="hidden"
+                        name="producto_id"
+                        value="{{ $producto->id }}"
                     >
 
-                        <option value="" disabled selected>
-                            SELECCIONAR TALLE
-                        </option>
 
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
+                    <button
+                        type="submit"
+                        class="btn-anadir"
+                    >
+                        AÑADIR AL CARRITO
+                    </button>
 
-                    </select>
+                </form>
+
+            @else
+
+                <div class="producto-login">
+
+                    <p>
+                        Debes iniciar sesión para agregar productos al carrito.
+                    </p>
+
+                    <a href="{{ route('login') }}">
+                        Iniciar sesión
+                    </a>
 
                 </div>
 
+            @endif
 
-                <!-- BOTÓN -->
-
-                <button
-                    type="submit"
-                    class="btn-anadir"
-                >
-                    AÑADIR AL CARRITO
-                </button>
-
-            </form>
 
         </section>
 
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- =========================
+         FOOTER
+    ========================= -->
 
     <footer class="footer-principal">
 
@@ -234,12 +291,12 @@
         </span>
 
         <span>
-            © 2026
+            © {{ date('Y') }}
         </span>
 
     </footer>
 
+<script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>
-```

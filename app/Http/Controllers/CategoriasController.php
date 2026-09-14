@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorias;
+use App\Models\Productos;
 use Illuminate\Http\Request;
 
 class CategoriasController extends Controller
@@ -11,16 +12,20 @@ class CategoriasController extends Controller
     {
         $categorias = Categorias::all();
 
-        return view('admin.categorias', compact('categorias'));
+        return view(
+            'admin.categorias',
+            compact('categorias')
+        );
     }
-
     public function store(Request $request)
     {
         $datosValidados = $request->validate(
+
             [
                 'nombre' => 'required|string|max:100',
                 'descripcion' => 'nullable|string|max:255',
             ],
+
             [
                 'nombre.required' => 'El nombre es obligatorio.',
                 'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
@@ -28,30 +33,41 @@ class CategoriasController extends Controller
             ]
         );
 
+
         Categorias::create([
+
             'nombre' => $datosValidados['nombre'],
             'descripcion' => $datosValidados['descripcion'] ?? null,
+
         ]);
+
 
         return redirect()
             ->route('categorias.index')
-            ->with('mensaje', 'Categoría guardada correctamente.');
+            ->with(
+                'mensaje',
+                'Categoría guardada correctamente.'
+            );
     }
 
     public function edit($id)
     {
         $categoria = Categorias::findOrFail($id);
 
-        return view('admin.Categorias_edit', compact('categoria'));
+        return view(
+            'admin.Categorias_edit',
+            compact('categoria')
+        );
     }
-
     public function update(Request $request, $id)
     {
         $datosValidados = $request->validate(
+
             [
                 'nombre' => 'required|string|max:100',
                 'descripcion' => 'nullable|string|max:255',
             ],
+
             [
                 'nombre.required' => 'El nombre es obligatorio.',
                 'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
@@ -59,15 +75,54 @@ class CategoriasController extends Controller
             ]
         );
 
+
         $categoria = Categorias::findOrFail($id);
 
+
         $categoria->update([
+
             'nombre' => $datosValidados['nombre'],
             'descripcion' => $datosValidados['descripcion'] ?? null,
+
         ]);
+
 
         return redirect()
             ->route('categorias.index')
-            ->with('mensaje', 'Categoría actualizada correctamente.');
+            ->with(
+                'mensaje',
+                'Categoría actualizada correctamente.'
+            );
     }
+
+    public function tienda()
+    {
+        $categorias = Categorias::all();
+
+        return view(
+            'tienda.categorias',
+            compact('categorias')
+        );
+    }
+
+    public function mostrarCategoria($id)
+    {
+        $categoria = Categorias::findOrFail($id);
+
+
+        $productos = Productos::where(
+            'categorias_id',
+            $categoria->id
+        )->get();
+
+
+        return view(
+            'tienda.categoria',
+            compact(
+                'categoria',
+                'productos'
+            )
+        );
+    }
+
 }
