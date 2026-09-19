@@ -21,21 +21,14 @@
 
 <body>
 
-
-    <!-- =========================
-         ENCABEZADO
-    ========================== -->
-
     <header>
 
         <div class="logo">
             TIENDA DE ROPA
         </div>
 
-
-        <div class="search">
-            BUSCAR
-        </div>
+        <input type="text" class="search" placeholder="Buscar">
+        
 
 
         <nav class="menu">
@@ -124,20 +117,11 @@
     </header>
 
 
-
-    <!-- =========================
-         CONTENIDO PRINCIPAL
-    ========================== -->
-
     <main>
 
 
         <section class="productos">
 
-
-            <!-- =========================
-                 TÍTULO
-            ========================== -->
 
             <h1 class="titulo-seccion">
 
@@ -152,11 +136,6 @@
 
             </p>
 
-
-
-            <!-- =========================
-                 PRODUCTOS
-            ========================== -->
 
             @if ($productos->isEmpty())
 
@@ -268,10 +247,6 @@
 
 
 
-    <!-- =========================
-         PIE DE PÁGINA
-    ========================== -->
-
     <footer>
 
         <span>
@@ -284,13 +259,9 @@
         </span>
 
 
-        <span>
-            Contacto
-        </span>
-
     </footer>
 
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/catalogo.js') }}"></script>
 </body>
 
 </html>

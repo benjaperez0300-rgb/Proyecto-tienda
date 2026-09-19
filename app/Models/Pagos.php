@@ -2,31 +2,39 @@
 
 namespace App\Models;
 
-use App\Models\Pedidos;
-use App\Models\MetodosPagos;
 use Illuminate\Database\Eloquent\Model;
 
 class Pagos extends Model
 {
     protected $table = 'pagos';
+
     protected $primaryKey = 'id';
-    public $timestamps = false; 
+
+    public $timestamps = false;
+
     protected $fillable = [
         'pedidos_id',
         'metodos_pagos_id',
-        'fecha_pago',
         'monto',
-        'numero_cuota'
-
+        'numero_cuota',
+        'fecha_pago',
     ];
+
 
     public function pedido()
     {
-        return $this->belongsTo(Pedidos::class, 'pedidos_id');
+        return $this->belongsTo(
+            Pedidos::class,
+            'pedidos_id'
+        );
     }
+
 
     public function metodoPago()
     {
-        return $this->belongsTo(MetodosPagos::class, 'metodos_pagos_id');
+        return $this->belongsTo(
+            MetodosPagos::class,
+            'metodos_pagos_id'
+        );
     }
 }

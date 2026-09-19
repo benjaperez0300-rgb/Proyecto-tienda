@@ -7,18 +7,23 @@ use Illuminate\Http\Request;
 
 class EstadosPedidosController extends Controller
 {
-     public function index()
+    public function index()
     {
         $estados = EstadosPedidos::all();
 
-        return view('estados_pedidos', compact('estados'));
+        return view(
+            'admin.estados_pedidos',
+            compact('estados')
+        );
     }
-      public function store(Request $request)
+
+    public function store(Request $request)
     {
-        $Datosvalidados=$request->validate([
+        $Datosvalidados = $request->validate([
             'nombre' => 'required|string|max:100',
-        ],[
+        ], [
             'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.string' => 'El nombre debe ser un texto.',
             'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
         ]);
 
@@ -26,6 +31,12 @@ class EstadosPedidosController extends Controller
             'nombre' => $Datosvalidados['nombre'],
         ]);
 
-        return redirect('/estados-pedidos');
+        return redirect()
+            ->route('estados_pedidos.index')
+            ->with(
+                'mensaje',
+                'Estado de pedido guardado correctamente.'
+            );
     }
 }
+

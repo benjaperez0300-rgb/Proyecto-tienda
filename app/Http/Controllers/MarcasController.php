@@ -7,19 +7,23 @@ use Illuminate\Http\Request;
 
 class MarcasController extends Controller
 {
-public function index()
+    public function index()
     {
         $marcas = Marcas::all();
 
-        return view('marcas.index', compact('marcas'));
+        return view(
+            'admin.marcas',
+            compact('marcas')
+        );
     }
 
     public function store(Request $request)
     {
-        $Datosvalidados=$request->validate([
+        $Datosvalidados = $request->validate([
             'nombre' => 'required|string|max:100',
-        ],[
+        ], [
             'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.string' => 'El nombre debe ser un texto.',
             'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
         ]);
 
@@ -27,6 +31,11 @@ public function index()
             'nombre' => $Datosvalidados['nombre'],
         ]);
 
-        return redirect('/marcas');
+        return redirect()
+            ->route('marcas.index')
+            ->with(
+                'mensaje',
+                'Marca guardada correctamente.'
+            );
     }
 }

@@ -11,7 +11,7 @@ public function index()
     {
         $metodosPagos = MetodosPagos::all();
 
-        return view('metodos_pagos.index', compact('metodosPagos'));
+        return view('admin.MetodosPagos', compact('metodosPagos'));
     }
 
     public function store(Request $request)

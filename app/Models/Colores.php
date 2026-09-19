@@ -10,6 +10,6 @@ protected $table = 'colores';
     protected $primaryKey = 'id';
     public $timestamps = false; 
     protected $fillable = [
-        'nombre', 'codigo_hex',
+        'nombre',
     ];
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Proveedor;
+use App\Models\Producto;
 use Illuminate\Database\Eloquent\Model;
 
 class Compras extends Model
@@ -21,6 +23,6 @@ class Compras extends Model
     }
     public function producto()
     {
-        return $this->belongsTo(Producto::class, 'producto_id');
+        return $this->belongsTo(Productos::class, 'producto_id');
     }
 }

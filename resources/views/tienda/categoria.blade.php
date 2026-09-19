@@ -17,11 +17,6 @@
 
 <body>
 
-
-    <!-- =========================
-         ENCABEZADO
-    ========================== -->
-
     <header>
 
         <div class="logo">
@@ -104,19 +99,10 @@
     </header>
 
 
-
-    <!-- =========================
-         CONTENIDO PRINCIPAL
-    ========================== -->
-
     <main>
 
         <section class="productos">
 
-
-            <!-- =========================
-                 TÍTULO
-            ========================== -->
 
             <h1 class="titulo-seccion">
 
@@ -124,11 +110,6 @@
 
             </h1>
 
-
-
-            <!-- =========================
-                 DESCRIPCIÓN
-            ========================== -->
 
             @if ($categoria->descripcion)
 
@@ -140,11 +121,6 @@
 
             @endif
 
-
-
-            <!-- =========================
-                 PRODUCTOS
-            ========================== -->
 
             @if ($productos->isEmpty())
 
@@ -241,11 +217,6 @@
         </section>
 
 
-
-        <!-- =========================
-             VOLVER
-        ========================== -->
-
         <div class="volver-categorias">
 
             <a href="{{ route('tienda.categorias') }}">
@@ -259,12 +230,6 @@
 
     </main>
 
-
-
-    <!-- =========================
-         PIE DE PÁGINA
-    ========================== -->
-
     <footer>
 
         <span>
@@ -275,13 +240,9 @@
             © {{ date('Y') }}
         </span>
 
-        <span>
-            Contacto
-        </span>
 
     </footer>
 
-<script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>

@@ -14,7 +14,7 @@ class UsuariosController extends Controller
     {
         $usuarios = Usuarios::all();
 
-        return view('tienda.pagina', compact('usuarios'));
+        return view('admin.usuarios', compact('usuarios'));
     }
 
     public function store(Request $request)
@@ -61,51 +61,79 @@ class UsuariosController extends Controller
             ->with('success', 'Usuario creado exitosamente.');
     }
 
+    public function storeAdmin(Request $request)
+{
+    $DatosValidados = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'email' => 'required|email|unique:usuarios,email',
+        'password' => 'required|string|min:6',
+        'telefono' => 'nullable|string|max:20',
+        'direccion' => 'nullable|string|max:255',
+        'fecha_nac' => 'nullable|date',
+        'rol' => 'required|in:cliente,admin',
+    ]);
+
+    Usuarios::create([
+        'nombre' => $DatosValidados['nombre'],
+        'apellido' => $DatosValidados['apellido'],
+        'email' => $DatosValidados['email'],
+        'password' => bcrypt($DatosValidados['password']),
+        'telefono' => $DatosValidados['telefono'] ?? null,
+        'direccion' => $DatosValidados['direccion'] ?? null,
+        'fecha_nac' => $DatosValidados['fecha_nac'] ?? null,
+        'rol' => $request->rol,
+    ]);
+
+    return redirect()
+        ->route('usuarios.index')
+        ->with('success', 'Usuario creado exitosamente.');
+}
+
 
     
-    public function edit($id)
-    {
-        $usuario = Usuarios::findOrFail($id);
+  public function edit($id)
+{
+    $usuario = Usuarios::findOrFail($id);
 
-        return view('tienda.edit', compact('usuario'));
-    }
-
-
-    
-
-    public function update(Request $request, $id)
-    {
-        $DatosValidados = $request->validate([
-
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email,' . $id . ',id',
-            'telefono' => 'nullable|string|max:20',
-            'direccion' => 'nullable|string|max:255',
-            'fecha_nac' => 'nullable|date',
-
-        ], [
-
-            'nombre.required' => 'El nombre es obligatorio.',
-            'apellido.required' => 'El apellido es obligatorio.',
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico debe ser una dirección válida.',
-            'email.unique' => 'El correo electrónico ya está en uso.',
-
-        ]);
+    return view('admin.usuarios.edit', compact('usuario'));
+}
 
 
-        $usuario = Usuarios::findOrFail($id);
+public function update(Request $request, $id)
+{
+    $DatosValidados = $request->validate([
 
-        $usuario->update($DatosValidados);
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'email' => 'required|email|unique:usuarios,email,' . $id . ',id',
+        'telefono' => 'nullable|string|max:20',
+        'direccion' => 'nullable|string|max:255',
+        'fecha_nac' => 'nullable|date',
+        'rol' => 'required|in:cliente,admin',
+
+    ], [
+
+        'nombre.required' => 'El nombre es obligatorio.',
+        'apellido.required' => 'El apellido es obligatorio.',
+        'email.required' => 'El correo electrónico es obligatorio.',
+        'email.email' => 'El correo electrónico debe ser una dirección válida.',
+        'email.unique' => 'El correo electrónico ya está en uso.',
+        'rol.required' => 'El rol es obligatorio.',
+        'rol.in' => 'El rol seleccionado no es válido.',
+
+    ]);
 
 
-        return redirect()
-            ->route('tienda.pagina')
-            ->with('success', 'Usuario actualizado exitosamente.');
-    }
+    $usuario = Usuarios::findOrFail($id);
+
+    $usuario->update($DatosValidados);
 
 
+    return redirect()
+        ->route('usuarios.index')
+        ->with('success', 'Usuario actualizado exitosamente.');
+}
    
     public function perfil()
     {
@@ -148,7 +176,7 @@ class UsuariosController extends Controller
 
 
         return view(
-            'tienda.edit-perfil',
+            'tienda.perfil_edit',
             compact('usuario')
         );
     }

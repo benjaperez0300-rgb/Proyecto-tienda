@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proveedor extends Model
 {
-    protected $table = 'proveedor';
+    protected $table = 'proveedores';
+
     protected $primaryKey = 'id';
-    public $timestamps = false; 
+
+    public $timestamps = false;
+
     protected $fillable = [
         'nombre_empresa',
         'celular',
-        'email',
+        'mail',
         'rut',
         'codigo_postal',
         'direccion',

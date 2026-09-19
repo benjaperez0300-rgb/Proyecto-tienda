@@ -11,7 +11,7 @@ public function index()
     {
         $talles = Talles::all();
 
-        return view('talles.index', compact('talles'));
+        return view('admin.talles', compact('talles'));
     }
 
     public function store(Request $request)

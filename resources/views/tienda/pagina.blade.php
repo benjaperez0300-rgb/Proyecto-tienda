@@ -1,4 +1,3 @@
-```blade
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,10 +11,6 @@
 </head>
 
 <body>
-
-    <!-- =========================
-         HEADER
-    ========================= -->
 
     <header>
 
@@ -31,9 +26,6 @@
 
             @if (session()->has('usuario_id'))
 
-                <!-- =========================
-                     USUARIO LOGUEADO
-                ========================= -->
 
                 <a href="{{ route('tienda.pagina') }}">
                     Inicio
@@ -61,9 +53,6 @@
 
             @else
 
-                <!-- =========================
-                     USUARIO NO LOGUEADO
-                ========================= -->
 
                 <a href="{{ route('tienda.pagina') }}">
                     Inicio
@@ -96,9 +85,6 @@
     </header>
 
 
-    <!-- =========================
-         INICIO
-    ========================= -->
 
     <main>
 
@@ -118,9 +104,6 @@
         </section>
 
 
-        <!-- =========================
-             PRODUCTOS
-        ========================= -->
 
         <section
             class="productos"
@@ -186,10 +169,6 @@
         </section>
 
 
-        <!-- =========================
-             SOBRE NOSOTROS
-        ========================= -->
-
         <section class="nosotros">
 
             <div class="nosotros-contenido">
@@ -212,9 +191,7 @@
     </main>
 
 
-    <!-- =========================
-         FOOTER
-    ========================= -->
+ 
 
     <footer id="contacto">
 
@@ -227,7 +204,7 @@
         </span>
 
     </footer>
-<script src="{{ asset('js/script.js') }}"></script>
+
 </body>
 
 </html>

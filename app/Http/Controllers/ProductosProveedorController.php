@@ -11,29 +11,48 @@ class ProductosProveedorController extends Controller
 {
     public function index()
     {
-        $productosProveedor = ProductosProveedor::with('producto', 'proveedor')->get();
+        $productosProveedor = ProductosProveedor::with(
+            'producto',
+            'proveedor'
+        )->get();
 
-        return view('admin.productos_proveedor', compact('productosProveedor'));
+        $productos = Productos::all();
+
+        $proveedores = Proveedor::all();
+
+        return view(
+            'admin.ProductosProveedor',
+            compact(
+                'productosProveedor',
+                'productos',
+                'proveedores'
+            )
+        );
     }
+
     public function store(Request $request)
     {
-        $Datosvalidados=$request->validate([
-            'productos_id' => 'required|exists:productos,id_producto',
-            'proveedores_id' => 'required|exists:proveedor,id',
-        ],[
+        $Datosvalidados = $request->validate([
+            'productos_id' => 'required|exists:productos,id',
+            'proveedores_id' => 'required|exists:proveedores,id',
+        ], [
             'productos_id.required' => 'El producto es obligatorio.',
             'productos_id.exists' => 'El producto seleccionado no existe.',
+
             'proveedores_id.required' => 'El proveedor es obligatorio.',
             'proveedores_id.exists' => 'El proveedor seleccionado no existe.',
         ]);
 
         ProductosProveedor::create([
-           'productos_id' => $Datosvalidados['productos_id'],
-           'proveedores_id' => $Datosvalidados['proveedores_id'], 
+            'productos_id' => $Datosvalidados['productos_id'],
+            'proveedores_id' => $Datosvalidados['proveedores_id'],
         ]);
 
         return redirect()
-           ->route ('productos_proveedor.index')
-           ->with('mensaje', 'Producto-Proveedor guardado correctamente.');
+            ->route('ProductosProveedor.index')
+            ->with(
+                'mensaje',
+                'Producto-Proveedor guardado correctamente.'
+            );
     }
 }

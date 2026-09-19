@@ -12,10 +12,6 @@
 
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================= -->
-
     <header>
 
         <a href="{{ route('tienda.pagina') }}" class="logo">
@@ -189,6 +185,12 @@
                         required
                     >
 
+                     <button
+                     type="button"
+                      id="mostrar-password">
+                      Mostrar
+                    </button>
+
                 </div>
 
 
@@ -214,12 +216,8 @@
             © {{ date('Y') }}
         </span>
 
-        <span>
-            Contacto
-        </span>
-
     </footer>
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/registro.js') }}"></script>
 </body>
 
 </html>

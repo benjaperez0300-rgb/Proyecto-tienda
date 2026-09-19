@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #222;
+}
+
+
+/* HEADER */
+
+.admin-header {
+    min-height: 80px;
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-logo {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.admin-titulo {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+
+/* BOTÓN CERRAR SESIÓN */
+
+.btn-cerrar {
+    padding: 10px 18px;
+
+    border: 1px solid #222;
+    background-color: #222;
+    color: white;
+
+    cursor: pointer;
+}
+
+.btn-cerrar:hover {
+    background-color: #444;
+}
+
+
+/* CONTENEDOR */
+
+.admin-contenedor {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.admin-contenedor h1 {
+    margin-bottom: 10px;
+}
+
+.admin-descripcion {
+    margin-bottom: 40px;
+}
+
+
+/* SECCIONES */
+
+.admin-seccion {
+    margin-bottom: 45px;
+}
+
+.admin-seccion h2 {
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #ccc;
+
+    padding-bottom: 10px;
+}
+
+
+/* GRID */
+
+.admin-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* TARJETAS */
+
+.admin-card {
+    display: block;
+
+    padding: 25px;
+
+    background-color: white;
+
+    border: 1px solid #ddd;
+
+    text-decoration: none;
+
+    color: #222;
+
+    transition: 0.2s;
+}
+
+.admin-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #222;
+}
+
+.admin-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.admin-card p {
+    margin: 0;
+
+    color: #666;
+}
+
+
+/* FOOTER */
+
+.admin-footer {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 25px 32px;
+
+    background-color: white;
+
+    border-top: 1px solid #ddd;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .admin-header {
+        flex-direction: column;
+
+        gap: 15px;
+
+        padding: 20px;
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-footer {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+}

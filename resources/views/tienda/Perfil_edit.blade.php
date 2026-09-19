@@ -16,11 +16,6 @@
 
 <body>
 
-
-<!-- =========================
-     ENCABEZADO
-========================== -->
-
 <header>
 
     <div class="logo">
@@ -70,22 +65,11 @@
 
 </header>
 
-
-
-<!-- =========================
-     CONTENIDO
-========================== -->
-
 <main class="contenedor">
 
     <h1>
         Editar Perfil
     </h1>
-
-
-    <!-- =========================
-         ERRORES
-    ========================== -->
 
     @if ($errors->any())
 
@@ -112,11 +96,6 @@
     @endif
 
 
-
-    <!-- =========================
-         FORMULARIO
-    ========================== -->
-
     <form
         action="{{ route('perfil.update') }}"
         method="POST"
@@ -127,7 +106,6 @@
         @method('PUT')
 
 
-        <!-- NOMBRE -->
 
         <div class="campo">
 
@@ -145,10 +123,6 @@
 
         </div>
 
-
-
-        <!-- APELLIDO -->
-
         <div class="campo">
 
             <label for="apellido">
@@ -164,10 +138,6 @@
             >
 
         </div>
-
-
-
-        <!-- EMAIL -->
 
         <div class="campo">
 
@@ -185,10 +155,6 @@
 
         </div>
 
-
-
-        <!-- DIRECCIÓN -->
-
         <div class="campo">
 
             <label for="direccion">
@@ -204,9 +170,6 @@
 
         </div>
 
-
-
-        <!-- TELÉFONO -->
 
         <div class="campo">
 
@@ -224,9 +187,6 @@
         </div>
 
 
-
-        <!-- FECHA DE NACIMIENTO -->
-
         <div class="campo">
 
             <label for="fecha_nac">
@@ -242,10 +202,6 @@
 
         </div>
 
-
-
-        <!-- BOTONES -->
-
         <button type="submit">
             Actualizar Perfil
         </button>
@@ -259,7 +215,7 @@
 
 </main>
 
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/perfil.js') }}"></script>
 </body>
 
 </html>

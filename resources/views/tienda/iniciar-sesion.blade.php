@@ -117,6 +117,11 @@
                     name="password"
                     required
                 >
+                  <button
+                  type="button" 
+                  id="mostrar-password">
+                    Mostrar
+                </button>
 
             </div>
 
@@ -139,13 +144,9 @@
             © {{ date('Y') }}
         </span>
 
-        <span>
-            Contacto
-        </span>
-
     </footer>
 
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/login.js') }}"></script>
 </body>
 
 </html>

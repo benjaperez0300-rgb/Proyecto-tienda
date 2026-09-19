@@ -73,15 +73,15 @@
 
         <div class="campo">
 
-            <label for="email">
+            <label for="mail">
                 Email
             </label>
 
             <input
                 type="email"
-                id="email"
-                name="email"
-                value="{{ old('email', $proveedor->email) }}"
+                id="mail"
+                name="mail"
+                value="{{ old('mail', $proveedor->mail) }}"
                 required
             >
         </div>
@@ -136,3 +136,6 @@
         <button type="submit">Actualizar</button>
 
     </form>
+ </main>
+    </body>
+</html>

@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Compras;
 use App\Models\Proveedor;
+use App\Models\Productos;
 use Illuminate\Http\Request;
 
 class ComprasController extends Controller
 {
     public function index()
     {
-        $compras = Compras::with('proveedor')->get();
-        return view('compras.index', compact('compras'));
+        $compras = Compras::with('proveedor', 'producto')->get();
+        $proveedores = Proveedor::all();
+        $productos = Productos::all();
+
+        return view(
+            'admin.compras',
+            compact('compras', 'proveedores', 'productos')
+        );
     }
 
     public function store(Request $request)
@@ -21,12 +28,11 @@ class ComprasController extends Controller
             'producto_id' => 'required|exists:productos,id',
             'fecha' => 'required|date',
             'total' => 'required|numeric|min:0',
-
         ], [
             'proveedor_id.required' => 'El proveedor es obligatorio.',
             'proveedor_id.exists' => 'El proveedor seleccionado no existe.',
             'producto_id.required' => 'El producto es obligatorio.',
-            'producto_id.exists' => 'El producto seleccionado no existe.',  
+            'producto_id.exists' => 'El producto seleccionado no existe.',
             'fecha.required' => 'La fecha es obligatoria.',
             'fecha.date' => 'La fecha debe ser una fecha válida.',
             'total.required' => 'El total es obligatorio.',
@@ -41,15 +47,23 @@ class ComprasController extends Controller
             'total' => $DatosValidados['total'],
         ]);
 
-        return redirect()->route('compras.index')->with('success', 'Compra creada exitosamente.');
+        return redirect()
+            ->route('compras.index')
+            ->with('mensaje', 'Compra creada exitosamente.');
     }
+
     public function edit($id)
     {
         $compra = Compras::findOrFail($id);
         $proveedores = Proveedor::all();
+        $productos = Productos::all();
 
-        return view('compras.edit', compact('compra', 'proveedores'));
+        return view(
+            'compras.edit',
+            compact('compra', 'proveedores', 'productos')
+        );
     }
+
     public function update(Request $request, $id)
     {
         $DatosValidados = $request->validate([
@@ -61,7 +75,7 @@ class ComprasController extends Controller
             'proveedor_id.required' => 'El proveedor es obligatorio.',
             'proveedor_id.exists' => 'El proveedor seleccionado no existe.',
             'producto_id.required' => 'El producto es obligatorio.',
-            'producto_id.exists' => 'El producto seleccionado no existe.',   
+            'producto_id.exists' => 'El producto seleccionado no existe.',
             'fecha.required' => 'La fecha es obligatoria.',
             'fecha.date' => 'La fecha debe ser una fecha válida.',
             'total.required' => 'El total es obligatorio.',
@@ -70,8 +84,11 @@ class ComprasController extends Controller
         ]);
 
         $compra = Compras::findOrFail($id);
+
         $compra->update($DatosValidados);
 
-        return redirect()->route('compras.index')->with('success', 'Compra actualizada exitosamente.');
+        return redirect()
+            ->route('compras.index')
+            ->with('mensaje', 'Compra actualizada exitosamente.');
     }
 }

@@ -12,10 +12,6 @@
 
 <body>
 
-```
-<!-- =========================
-     ENCABEZADO
-========================== -->
 
 <header>
 
@@ -67,17 +63,7 @@
 </header>
 
 
-
-<!-- =========================
-     CONTENIDO PRINCIPAL
-========================== -->
-
 <main class="contenedor">
-
-
-    <!-- =========================
-         MENSAJE DE ÉXITO
-    ========================== -->
 
     @if (session('mensaje'))
 
@@ -89,11 +75,6 @@
 
     @endif
 
-
-
-    <!-- =========================
-         ERRORES
-    ========================== -->
 
     @if ($errors->any())
 
@@ -118,12 +99,6 @@
         </div>
 
     @endif
-
-
-
-    <!-- =========================
-         INFORMACIÓN DEL PERFIL
-    ========================== -->
 
     <section class="perfil">
 
@@ -179,12 +154,6 @@
 
     </section>
 
-
-
-    <!-- =========================
-         HISTORIAL DE COMPRAS
-    ========================== -->
-
     <section class="historial">
 
         <h2>
@@ -230,11 +199,13 @@
 
     </section>
 
+    <div class="volver">
 
+    <a href="{{ route('tienda.pedidos') }}">
+        Ver todos mis pedidos
+    </a>
 
-    <!-- =========================
-         VOLVER
-    ========================== -->
+</div>
 
     <div class="volver">
 
@@ -247,7 +218,7 @@
 
 </main>
 
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/perfil.js') }}"></script>
 </body>
 
 </html>

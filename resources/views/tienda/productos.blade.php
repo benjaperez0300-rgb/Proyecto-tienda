@@ -14,30 +14,19 @@
 
 <body>
 
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
     <header>
 
         <a href="{{ route('tienda.pagina') }}" class="logo">
             TIENDA DE ROPA
         </a>
 
-
         <div class="search">
             BUSCAR
         </div>
 
-
         <nav class="menu">
 
             @if (session()->has('usuario_id'))
-
-                <!-- =========================
-                     USUARIO LOGUEADO
-                ========================= -->
 
                 <a href="{{ route('tienda.pagina') }}">
                     Inicio
@@ -55,6 +44,10 @@
                     Carrito
                 </a>
 
+                <a href="{{ route('perfil') }}">
+                    Mi perfil
+                </a>
+
                 <form action="{{ route('logout') }}" method="POST">
 
                     @csrf
@@ -66,10 +59,6 @@
                 </form>
 
             @else
-
-                <!-- =========================
-                     USUARIO NO LOGUEADO
-                ========================= -->
 
                 <a href="{{ route('tienda.pagina') }}">
                     Inicio
@@ -102,16 +91,9 @@
     </header>
 
 
-    <!-- =========================
-         PRODUCTO
-    ========================= -->
-
     <main class="producto-contenedor">
 
-
-        <!-- =========================
-             GALERÍA
-        ========================= -->
+        <!-- GALERÍA -->
 
         <section class="producto-galeria">
 
@@ -143,12 +125,9 @@
         </section>
 
 
-        <!-- =========================
-             INFORMACIÓN
-        ========================= -->
+        <!-- INFORMACIÓN DEL PRODUCTO -->
 
         <section class="producto-detalle">
-
 
             <div class="producto-cabecera">
 
@@ -159,9 +138,7 @@
             </div>
 
 
-            <!-- =========================
-                 PRECIO
-            ========================= -->
+            <!-- PRECIO -->
 
             <div class="producto-precio">
 
@@ -172,18 +149,14 @@
             </div>
 
 
-            <!-- =========================
-                 CUOTAS
-            ========================= -->
+            <!-- CUOTAS -->
 
             <p class="nota-cuotas">
                 *POSIBILIDAD DE PAGO EN CUOTAS SIN INTERESES
             </p>
 
 
-            <!-- =========================
-                 CÓDIGO DE BARRA
-            ========================= -->
+            <!-- CÓDIGO DE BARRA -->
 
             <div class="producto-variante">
 
@@ -197,9 +170,7 @@
             </div>
 
 
-            <!-- =========================
-                 INFORMACIÓN
-            ========================= -->
+            <!-- INFORMACIÓN -->
 
             <div class="producto-descripcion">
 
@@ -227,14 +198,12 @@
             </div>
 
 
-            <!-- =========================
-                 AGREGAR AL CARRITO
-            ========================= -->
+            <!-- SELECCIÓN DE VARIANTE -->
 
             @if (session()->has('usuario_id'))
 
                 <form
-                    action="{{ route('carrito.store') }}"
+                    action="{{ route('carrito_productos.store') }}"
                     method="POST"
                     class="form-producto"
                 >
@@ -244,10 +213,87 @@
 
                     <input
                         type="hidden"
-                        name="producto_id"
+                        name="productos_id"
                         value="{{ $producto->id }}"
                     >
 
+
+                    <!-- TALLE Y COLOR -->
+
+                    <div class="seleccion">
+
+                        <label for="variante">
+                            Talle y color
+                        </label>
+
+                        <select
+                            name="productos_variantes_id"
+                            id="variante"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccioná una variante
+                            </option>
+
+
+                            @foreach ($variantes as $variante)
+
+                                <option
+                                    value="{{ $variante->id }}"
+                                    @if ($variante->stock <= 0)
+                                        disabled
+                                    @endif
+                                >
+
+                                    @if ($variante->talle)
+                                        {{ $variante->talle->nombre }}
+                                    @endif
+
+                                    @if ($variante->talle && $variante->color)
+                                        -
+                                    @endif
+
+                                    @if ($variante->color)
+                                        {{ $variante->color->nombre }}
+                                    @endif
+
+                                    @if ($variante->stock <= 0)
+                                        - SIN STOCK
+                                    @else
+                                        - Stock: {{ $variante->stock }}
+                                    @endif
+
+                                </option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- CANTIDAD -->
+
+                    <div class="seleccion">
+
+                        <label for="cantidad">
+                            Cantidad
+                        </label>
+
+                        <input
+                            type="number"
+                            name="cantidad"
+                            id="cantidad"
+                            value="1"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- BOTÓN -->
 
                     <button
                         type="submit"
@@ -257,6 +303,7 @@
                     </button>
 
                 </form>
+
 
             @else
 
@@ -274,15 +321,12 @@
 
             @endif
 
-
         </section>
 
     </main>
 
 
-    <!-- =========================
-         FOOTER
-    ========================= -->
+    <!-- FOOTER -->
 
     <footer class="footer-principal">
 
@@ -296,7 +340,10 @@
 
     </footer>
 
-<script src="{{ asset('js/script.js') }}"></script>
+
+    <script src="{{ asset('js/productos.js') }}"></script>
+
 </body>
 
 </html>
+

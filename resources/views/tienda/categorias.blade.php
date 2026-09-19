@@ -16,10 +16,6 @@
 <body>
 
 
-    <!-- =========================
-         ENCABEZADO
-    ========================== -->
-
     <header>
 
         <div class="logo">
@@ -100,11 +96,6 @@
     </header>
 
 
-
-    <!-- =========================
-         CONTENIDO PRINCIPAL
-    ========================== -->
-
     <main>
 
         <section class="productos">
@@ -156,12 +147,6 @@
 
     </main>
 
-
-
-    <!-- =========================
-         PIE DE PÁGINA
-    ========================== -->
-
     <footer>
 
         <span>
@@ -172,13 +157,9 @@
             © {{ date('Y') }}
         </span>
 
-        <span>
-            Contacto
-        </span>
-
     </footer>
 
-<script src="{{ asset('js/script.js') }}"></script>
+
 </body>
 
 </html>

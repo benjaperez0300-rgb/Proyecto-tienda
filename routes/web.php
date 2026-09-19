@@ -13,15 +13,16 @@ use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ProductosProveedorController;
 use App\Http\Controllers\ProductosVariantesController;
 use App\Http\Controllers\UsuariosController;
-use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\PagosController;
-use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\DetalleComprasController;
 use App\Http\Controllers\CarritosController;
 use App\Http\Controllers\Carrito_ProductosController;
 use App\Http\Controllers\Movimiento_inventarioController;
 use App\Http\Controllers\Pedidos_productosController;
+use App\Http\Controllers\CheckoutController;
 
 
 // ==================================================
@@ -177,6 +178,25 @@ Route::delete(
     '/carrito-producto/{id}',
     [Carrito_ProductosController::class, 'destroy']
 )->name('carrito_productos.destroy');
+
+// ==================================================
+// CHECKOUT Y MIS PEDIDOS
+// ==================================================
+
+Route::get(
+    '/checkout',
+    [CheckoutController::class, 'index']
+)->name('checkout');
+
+Route::post(
+    '/checkout/confirmar',
+    [PedidosController::class, 'confirmarCompra']
+)->name('checkout.confirmar');
+
+Route::get(
+    '/mis-pedidos',
+    [PedidosController::class, 'misPedidos']
+)->name('tienda.pedidos');
 
 
 // ==================================================
@@ -422,8 +442,8 @@ Route::get(
 
 Route::post(
     '/usuarios',
-    [UsuariosController::class, 'store']
-)->name('usuarios.store');
+    [UsuariosController::class, 'storeAdmin']
+)->name('usuarios.storeAdmin');
 
 
 Route::get(
@@ -444,27 +464,23 @@ Route::put(
 
 Route::get(
     '/pedidos',
-    [PedidoController::class, 'index']
+    [PedidosController::class, 'index']
 )->name('pedidos.index');
-
 
 Route::post(
     '/pedidos',
-    [PedidoController::class, 'store']
+    [PedidosController::class, 'store']
 )->name('pedidos.store');
-
 
 Route::get(
     '/pedidos/{id_pedidos}/edit',
-    [PedidoController::class, 'edit']
+    [PedidosController::class, 'edit']
 )->name('pedidos.edit');
-
 
 Route::put(
     '/pedidos/{id_pedidos}',
-    [PedidoController::class, 'update']
+    [PedidosController::class, 'update']
 )->name('pedidos.update');
-
 
 // ==================================================
 // ADMIN - PAGOS
@@ -500,25 +516,25 @@ Route::put(
 
 Route::get(
     '/facturas',
-    [FacturaController::class, 'index']
+    [FacturasController::class, 'index']
 )->name('facturas.index');
 
 
 Route::post(
     '/facturas',
-    [FacturaController::class, 'store']
+    [FacturasController::class, 'store']
 )->name('facturas.store');
 
 
 Route::get(
     '/facturas/{id}/edit',
-    [FacturaController::class, 'edit']
+    [FacturasController::class, 'edit']
 )->name('facturas.edit');
 
 
 Route::put(
     '/facturas/{id}',
-    [FacturaController::class, 'update']
+    [FacturasController::class, 'update']
 )->name('facturas.update');
 
 
@@ -579,31 +595,13 @@ Route::put(
 
 
 // ==================================================
-// ADMIN - CARRITO PRODUCTOS
+// CARRITO PRODUCTOS
 // ==================================================
-
-Route::get(
-    '/carrito-productos',
-    [Carrito_ProductosController::class, 'index']
-)->name('carrito_productos.index');
-
 
 Route::post(
     '/carrito-productos',
     [Carrito_ProductosController::class, 'store']
 )->name('carrito_productos.store');
-
-
-Route::get(
-    '/carrito-productos/{id}/edit',
-    [Carrito_ProductosController::class, 'edit']
-)->name('carrito_productos.edit');
-
-
-Route::put(
-    '/carrito-productos/{id}',
-    [Carrito_ProductosController::class, 'update']
-)->name('carrito_productos.update');
 
 
 // ==================================================

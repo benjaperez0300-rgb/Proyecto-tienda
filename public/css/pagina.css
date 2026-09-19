@@ -348,47 +348,7 @@
         }
 
 
-        /* =========================
-           SOBRE NOSOTROS
-        ========================= */
-
-        .nosotros {
-            min-height: 70vh;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-
-            padding: 80px 30px;
-        }
-
-        .nosotros-contenido {
-            max-width: 700px;
-        }
-
-        .nosotros h2 {
-            font-family: Georgia, "Times New Roman", serif;
-
-            font-size: 50px;
-
-            font-weight: normal;
-
-            margin-bottom: 30px;
-        }
-
-        .nosotros p {
-            color: #555;
-
-            line-height: 1.8;
-
-            font-size: 15px;
-        }
-
-
+        
         /* =========================
            FOOTER
         ========================= */
@@ -724,5 +684,7 @@ RESPONSIVE - CATÁLOGO
 .volver-categorias a:hover {
     opacity: 0.5;
 }
-
+.oculto {
+    display: none;
+}
 

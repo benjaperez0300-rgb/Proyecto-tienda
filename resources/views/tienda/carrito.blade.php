@@ -97,14 +97,29 @@
 
                             <div class="producto-info">
 
-                                <h3>
-                                    {{ $item->producto->nombre }}
-                                </h3>
+                                   <h3> 
+                                     {{ $item->producto->nombre }}
+                                    </h3>
 
-                                <p class="precio">
+
+                                   <p class="precio"> 
                                     Precio:
-                                    ${{ number_format($item->producto->precio, 2, ',', '.') }}
-                                </p>
+                                     ${{ number_format($item->producto->precio, 2, ',', '.') }}
+                                   </p>
+
+
+                                   @if ($item->variante)
+                                      <p> 
+                                        <strong>Talle:</strong>
+                                        {{ $item->variante->talle->nombre }}
+                                      </p>
+                                       
+                                       <p>
+                                         <strong>Color:</strong>
+                                         {{ $item->variante->color->nombre }}
+                                       </p>
+                                   @endif
+
 
 
                                 {{-- FORMULARIO PARA ACTUALIZAR CANTIDAD --}}
@@ -210,12 +225,7 @@
                     </div>
 
 
-                    <button
-                        type="button"
-                        class="btn-comprar"
-                    >
-                        Continuar con la compra
-                    </button>
+                   <a href="{{ route('checkout') }}"class="btn-comprar"> Continuar con la compra</a>
 
                 </aside>
 
@@ -257,7 +267,7 @@
         </div>
 
     </main>
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/carrito.js') }}"></script>
 </body>
 
 </html>

@@ -4,23 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Compras extends Model
+class DetalleCompras extends Model
 {
-    protected $table = 'compras';
+    protected $table = 'detalle_compras';
+
     protected $primaryKey = 'id';
-    public $timestamps = false; 
+
+    public $timestamps = false;
+
     protected $fillable = [
         'compras_id',
         'producto_variante_id',
         'cantidad',
         'precio',
     ];
-    public function Compras()
+
+    public function compra()
     {
         return $this->belongsTo(Compras::class, 'compras_id');
     }
-    public function ProductosVariantes()
+
+    public function productoVariante()
     {
-        return $this->belongsTo(ProductoVariante::class, 'producto_variante_id');
+        return $this->belongsTo(
+            ProductosVariantes::class,
+            'producto_variante_id'
+        );
     }
 }

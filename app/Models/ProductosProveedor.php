@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Productos;
-use App\Models\Proveedores;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductosProveedor extends Model
 {
     protected $table = 'productos_proveedor';
+
     protected $primaryKey = 'id';
-    public $timestamps = false; 
+
+    public $timestamps = false;
+
     protected $fillable = [
         'productos_id',
         'proveedores_id',
@@ -18,11 +19,17 @@ class ProductosProveedor extends Model
 
     public function producto()
     {
-        return $this->belongsTo(Productos::class, 'productos_id');
+        return $this->belongsTo(
+            Productos::class,
+            'productos_id'
+        );
     }
 
     public function proveedor()
     {
-        return $this->belongsTo(Proveedores::class, 'proveedores_id');
+        return $this->belongsTo(
+            Proveedor::class,
+            'proveedores_id'
+        );
     }
 }

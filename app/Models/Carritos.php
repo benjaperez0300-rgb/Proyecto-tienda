@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\usuarios;
 use Illuminate\Database\Eloquent\Model;
 
 class Carritos extends Model

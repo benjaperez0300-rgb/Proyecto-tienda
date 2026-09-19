@@ -9,29 +9,33 @@ class ColoresController extends Controller
 {
     public function index()
     {
-       $colores = Colores::all();
+        $colores = Colores::all();
 
-        return view('colores.index', compact('colores'));
+        return view(
+            'admin.colores',
+            compact('colores')
+        );
     }
 
     public function store(Request $request)
     {
-        $Datosvalidados=$request->validate([
+        $Datosvalidados = $request->validate([
             'nombre' => 'required|string|max:100',
-            'codigo_hex' => 'required|string|max:7|regex:/^#[0-9A-Fa-f]{6}$/',
-        ],[
+        ], [
             'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.string' => 'El nombre debe ser un texto.',
             'nombre.max' => 'El nombre no puede superar los 100 caracteres.',
-            'codigo_hex.required' => 'El código hexadecimal es obligatorio.',
-            'codigo_hex.max' => 'El código hexadecimal no puede superar los 7 caracteres.',
-            'codigo_hex.regex' => 'El código hexadecimal debe tener el formato #RRGGBB.',
         ]);
 
         Colores::create([
             'nombre' => $Datosvalidados['nombre'],
-            'codigo_hex' => $Datosvalidados['codigo_hex'],
         ]);
 
-        return redirect('/colores');
+        return redirect()
+            ->route('colores.index')
+            ->with(
+                'mensaje',
+                'Color guardado correctamente.'
+            );
     }
 }
